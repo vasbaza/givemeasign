@@ -1,0 +1,48 @@
+name: app-deploy
+
+on:
+  push:
+    branches:
+      - master
+env:
+  IMAGE_TAG: main
+  CONTAINER_NAME: testapp
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to dockerhub
+        run:  echo ${{ secrets.DOCKER_PSSWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+      - uses: actions/checkout@master
+      - name: Build image
+        run: docker build -t ${{ secrets.DOCKER_LOGIN }}/${{ secrets.DOCKER_NAME }}:${{ env.IMAGE_TAG }} -f Dockerfile .
+      - name: Push image
+        run: docker push ${{ secrets.DOCKER_LOGIN }}/${{ secrets.DOCKER_NAME }}:${{ env.IMAGE_TAG }}
+
+  deploy-docker-image:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo ${{ secrets.DOCKER_PSSWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+
+            docker pull ${{ secrets.DOCKER_LOGIN }}/${{ secrets.DOCKER_NAME }}:${{ env.IMAGE_TAG }}
+
+            if docker ps | grep -q ${{ env.CONTAINER_NAME }}
+            then
+              docker stop ${{ env.CONTAINER_NAME }}
+              docker rm ${{ env.CONTAINER_NAME }}
+            fi
+
+            docker run -d -p 80:80 --name ${{ env.CONTAINER_NAME }} ${{ secrets.DOCKER_LOGIN }}/${{ secrets.DOCKER_NAME }}:${{ env.IMAGE_TAG }}
+            docker system prune -a -f
