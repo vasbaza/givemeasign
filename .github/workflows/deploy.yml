@@ -20,7 +20,7 @@ jobs:
         run: docker build . --file Dockerfile --tag image
 
       - name: Log into registry
-        run: echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u maria-vb --password-stdin
 
       - name: Push image
         run: |
@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+            echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u maria-vb --password-stdin
             IMAGE=docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}
             docker pull $IMAGE
             if docker ps -a | grep -q ${{ env.CONTAINER_NAME }}
