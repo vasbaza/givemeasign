@@ -24,7 +24,7 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_TAG=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_TAG=docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}
           docker tag image $IMAGE_TAG:latest
           docker push $IMAGE_TAG:latest
   deploy-docker-image:
