@@ -20,11 +20,13 @@ jobs:
         run: docker build . --file Dockerfile --tag image
 
       - name: Log into registry
-        run: echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u vasbaza --password-stdin
+        run: echo "${{ secrets.AUTH_GITHUB }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
-        run: |
-          docker push docker.pkg.github.com/vasbaza/givemeasign/${{ env.IMAGE_NAME }}:latest
+          run: |
+            IMAGE_TAG=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+            docker tag image $IMAGE_TAG:latest
+            docker push $IMAGE_TAG:latest
   deploy-docker-image:
     needs: build-and-push-docker-image
     runs-on: ubuntu-latest
