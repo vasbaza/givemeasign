@@ -24,7 +24,7 @@ jobs:
 
       - name: Push image
         run: |
-          docker push docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
+          docker push docker.pkg.github.com/maria-vb/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
   deploy-docker-image:
     needs: build-and-push-docker-image
     runs-on: ubuntu-latest
