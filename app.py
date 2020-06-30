@@ -8,20 +8,12 @@ app = Flask(__name__)
 @app.route('/entry')
 def entry_page():
     return render_template('entry.html',
-                           the_title='Welcome to search4letters on the web!')
+                           the_title='Позвольте вашему мозгу работать за Вас')
 
-
-@app.route('/search4', methods=['POST', 'GET'])
-def do_search():
-    phrase = request.form['phrase']
-    letters = request.form['letters']
-    title = 'Here are your results:'
-    results = str(search4letters(phrase, letters))
+@app.route('/results', methods=['POST', 'GET'])
+def results_page():
     return render_template('results.html',
-                           the_letters=letters,
-                           the_phrase=phrase,
-                           the_results=results,
-                           the_title=title)
+                           the_title='Подумайте, может в этом что-то есть?')
 
 
 if __name__ == "__main__":
