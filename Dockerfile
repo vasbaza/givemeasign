@@ -6,5 +6,5 @@ RUN pip freeze > requirements.txt
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
-
+    pip install flask
 CMD python /app/app/app.py
