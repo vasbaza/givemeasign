@@ -7,4 +7,4 @@ RUN pip freeze > requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-CMD python /app/app.py
+CMD python /app/app/app.py
