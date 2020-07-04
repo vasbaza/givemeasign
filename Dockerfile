@@ -6,6 +6,7 @@ RUN pip freeze > requirements.txt
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt \
-    pip install flask
+    pip install flask \
+    pip install pymongo
 
 CMD python /app/app/app.py
