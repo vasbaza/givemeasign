@@ -1,11 +1,10 @@
 FROM python:3
 
-COPY . /myapp
-WORKDIR ./app
+COPY . /app
 
 RUN pip freeze > requirements.txt
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-CMD python app.py
+CMD python /app/app.py
