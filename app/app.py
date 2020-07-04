@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/entry')
 def entry_page():
     return render_template('entry.html',
-                           the_title='Перед началом закройте глаза на 30 секунд')
+                           the_title='Расслабьтесь и постарайтесь ни о чем не думать')
 
 
 @app.route('/results', methods=['POST', 'GET'])
