@@ -1,7 +1,7 @@
 FROM python:3
 
-COPY . /app
-WORKDIR /app
+COPY . /myapp
+WORKDIR ./app
 
 RUN pip freeze > requirements.txt
 
