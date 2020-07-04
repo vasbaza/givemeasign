@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="gradient">
+    <div class="welcome">
+        Give me a sign project
+    </div>
+</div>
+
+<h2>{{ the_title }}</h2>
+
+<form method='POST' action='/results'>
+    <div class="container">
+        <input type="image" src='../static/images/label.svg' value="" name="" alt="">
+        <div class="center">Получить знак</div>
+    </div>
+</form>
+
+
+{% endblock %}

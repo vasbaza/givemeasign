@@ -51,5 +51,5 @@ jobs:
               fi
               docker rm ${{ env.CONTAINER_NAME }}
             fi
-            docker run -d -p 80:80 --name ${{ env.CONTAINER_NAME }} $IMAGE
+            docker run --env DB_STRING=${{ secrets.DB_STRING }} -d -p 80:80 --name ${{ env.CONTAINER_NAME }} $IMAGE
             docker system prune -a -f
